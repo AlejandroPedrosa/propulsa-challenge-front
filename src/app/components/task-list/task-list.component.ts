@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task-service.service';
 import { FormGroup, FormBuilder, FormsModule, NgForm } from '@angular/forms';
-import { ModalComponent } from '../../components/modal/modal.component';
+import { ModalComponent } from '../modal/modal.component';
 
 interface Task {
   id: number;
