@@ -1,0 +1,80 @@
+<div class="styled-table table-responsive">
+  <table class="table table-dark table-bordered">
+    <thead>
+      <tr>
+        <th (click)="sortTasksBy('title')" class="sort">Task</th>
+        <th (click)="sortTasksBy('status')" class="sort">Status</th>
+        <th (click)="sortTasksBy('created_at')" class="sort">Created At</th>
+        <th (click)="sortTasksBy('completed_at')" class="sort">Completed At</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="table-row-hover"
+        *ngFor="let task of tasks.reverse()"
+        [class.completed]="task.completed"
+        [class.incomplete]="!task.completed"
+      >
+        <td (click)="toggleTask(task)">
+          <input
+            type="checkbox"
+            [checked]="task.completed"
+            (change)="toggleTask(task)"
+          />
+          {{ task.title }}
+        </td>
+        <td (click)="toggleTask(task)">
+          {{ task.completed ? "Completed" : "Pending" }}
+        </td>
+        <td (click)="toggleTask(task)">
+          {{ task.created_at | date : "short" }}
+        </td>
+        <td (click)="toggleTask(task)">
+          {{ task.completed_at ? (task.completed_at | date : "short") : "N/A" }}
+        </td>
+        <td>
+          <button class="btn btn-info btn-sm me-2" (click)="editTask(task)">
+            <i class="fas fa-edit" style="color: #fafafa"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="deleteTaskModal(task)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-modal *ngIf="isModalEditOpen" (closeModal)="closeModal()">
+  <form #editForm="ngForm" (ngSubmit)="saveTaskEdited(editForm)">
+    <div class="d-flex flex-column">
+      <h5 class="my-3">New task title</h5>
+
+      <input
+        type="text"
+        id="taskTitle"
+        name="title"
+        required
+        class="form-control"
+        [ngModel]="currentTask?.title"
+      />
+      <button type="submit" class="btn btn-primary btn-sm mt-4">
+        Save changes
+      </button>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal *ngIf="isModalDeleteOpen" (closeModal)="closeModal()">
+  <div class="d-flex flex-column">
+    <h5 class="my-3">Delete task</h5>
+    <span>{{ currentTask?.title }}</span>
+    <button
+      (click)="deleteTask(currentTask?.id)"
+      class="btn btn-danger btn-sm mt-4"
+    >
+      Delete
+    </button>
+  </div>
+</app-modal>

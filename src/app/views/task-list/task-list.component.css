@@ -1,0 +1,18 @@
+.completed {
+  border-left: 1px green;
+}
+.incomplete {
+  border-left: 1px red;
+}
+.sort {
+  cursor: pointer;
+}
+
+.sort:hover {
+  background-color: #444;
+}
+
+tr:hover td {
+  cursor: pointer;
+  background: #444;
+}
